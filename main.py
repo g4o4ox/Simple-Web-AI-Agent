@@ -11,7 +11,7 @@ def chat():
 def response():
 	message = request.args.get("message")
 	response = ollama.chat(
-		model="smollm2:135m",
+		model="smollm2:135m", # mude de acordo com seu modelo ex:model="gwen3.2:4b"
 		messages=[{"role": "user", "content":message}]
 	)
 	return jsonify({"response":response["message"]["content"]})
