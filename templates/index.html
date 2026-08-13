@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+<style>
+    body {
+    margin: 0;
+    background: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+main {
+    width: 700px;
+    margin: 50px auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+#chat {
+    background: #1e1e1e;
+    min-height: 400px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+#input-area {
+    display: flex;
+    gap: 10px;
+}
+
+#message {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+</style>
+<body>
+    <main>
+        <h1>Chat com llama</h1>
+
+        <div id="chat">
+        </div>
+        <div id="input-area" class="input-area">
+            <input type="text" id="message" placeholder="Me Pergunte qualquer coisa">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </main>
+
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById("message");
+            const chat = document.getElementById("chat");
+
+            const message = input.value;
+
+            chat.innerHTML += `<p><strong>Você:</strong> ${message}</p>`;
+
+            const response = await fetch(
+                `/response?message=${encodeURIComponent(message)}`
+            );
+
+            const data = await response.json();
+
+            chat.innerHTML += `<p><strong>IA:</strong> ${data.response}</p>`;
+
+            input.value = "";
+        }
+    </script>
+
+</body>
+</html>
